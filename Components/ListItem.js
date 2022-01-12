@@ -6,10 +6,12 @@ import PropTypes from 'prop-types';
 const ListItem = (props) =>{
   return (
     <TouchableOpacity style={GlobalStyles.ListItem}>
+      <View style={GlobalStyles.ImageView}>
       <Image
         source={{uri: props.singleMedia.thumbnails.w160}}
         style={GlobalStyles.Image}
       />
+      </View>
       <View>
         <Text style={GlobalStyles.HeadLine}>{props.singleMedia.title}</Text>
         <Text style={GlobalStyles.Text}>{props.singleMedia.description}</Text>

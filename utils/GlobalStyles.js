@@ -12,6 +12,7 @@ export default StyleSheet.create({
     marginBottom: 10,
   },
   Image: {
+    flex: 1,
     margin: 10,
   },
   TextView: {
@@ -24,5 +25,8 @@ export default StyleSheet.create({
   },
   Text: {
     padding: 10,
+  },
+  ImageView: {
+    flex: 1,
   }
 });
