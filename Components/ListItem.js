@@ -4,6 +4,8 @@ import GlobalStyles from "../utils/GlobalStyles";
 import PropTypes from 'prop-types';
 
 const ListItem = (props) =>{
+
+  console.log(props);
   return (
     <TouchableOpacity style={GlobalStyles.ListItem}>
       <Image

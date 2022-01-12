@@ -7,11 +7,14 @@ export default StyleSheet.create({
     paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0
   },
   ListItem: {
+    flex: 1,
     flexDirection: "row",
     backgroundColor: "#b2beb5",
     marginBottom: 10,
   },
   Image: {
+    width: 200,
+    height: 200,
     margin: 10,
   },
   TextView: {
