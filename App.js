@@ -1,13 +1,19 @@
+import React from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import {SafeAreaView, FlatList, Text, View, Image, TouchableOpacity, StyleSheet} from 'react-native';
+import GlobalStyles from "./utils/GlobalStyles";
+import List from "./Components/List";
 
-export default function App() {
+
+const App = () => {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+    <>
+      <SafeAreaView style={GlobalStyles.AndroidSafeArea}>
+        <List />
+      </SafeAreaView>
+    <StatusBar style="auto"/>
+    </>
+  )
 }
 
 const styles = StyleSheet.create({
@@ -18,3 +24,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+
+export default App;
