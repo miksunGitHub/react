@@ -14,6 +14,8 @@ export default StyleSheet.create({
   Image: {
     flex: 1,
     margin: 10,
+    width: 200,
+    height: 200,
   },
   TextView: {
     flex: 2,
