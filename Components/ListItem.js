@@ -8,7 +8,7 @@ const ListItem = (props) =>{
     <TouchableOpacity style={GlobalStyles.ListItem}>
       <View style={GlobalStyles.ImageView}>
       <Image
-        source={{uri: props.singleMedia.thumbnails.w160}}
+        source={{uri: props.singleMedia.filename}}
         style={GlobalStyles.Image}
       />
       </View>
