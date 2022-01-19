@@ -4,18 +4,23 @@ import GlobalStyles from "../utils/GlobalStyles";
 import PropTypes from 'prop-types';
 import {uploadsUrl} from "../utils/Variables";
 
-const ListItem = (props) =>{
+const ListItem = ({navigation, singleMedia}) =>{
   return (
-    <TouchableOpacity style={GlobalStyles.ListItem}>
+    <TouchableOpacity
+      style={GlobalStyles.ListItem}
+      onPress = {() =>{
+        navigation.navigate('Single', {file: singleMedia});
+      }}
+    >
       <View style={GlobalStyles.ImageView}>
       <Image
-        source={{uri: uploadsUrl+ props.singleMedia.thumbnails?.w160}}
+        source={{uri: uploadsUrl+ singleMedia.thumbnails?.w160}}
         style={GlobalStyles.Image}
       />
       </View>
       <View>
-        <Text style={GlobalStyles.HeadLine}>{props.singleMedia.title}</Text>
-        <Text style={GlobalStyles.Text}>{props.singleMedia.description}</Text>
+        <Text style={GlobalStyles.HeadLine}>{singleMedia.title}</Text>
+        <Text style={GlobalStyles.Text}>{singleMedia.description}</Text>
       </View>
     </TouchableOpacity>
   );
@@ -23,6 +28,7 @@ const ListItem = (props) =>{
 
 ListItem.propTypes = {
   singleMedia: PropTypes.object.isRequired,
+  navigation: PropTypes.object.isRequired,
 };
 
 export default ListItem;
