@@ -1,10 +1,22 @@
-import React from 'react';
-import {StyleSheet, SafeAreaView, Text} from 'react-native';
+import React, {useContext} from 'react';
+import {StyleSheet, SafeAreaView, Text, Button} from 'react-native';
+import {MainContext} from "../context/MainContext";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 const Profile = () => {
+  const {setIsLoggedIn} = useContext(MainContext);
   return (
+
     <SafeAreaView style={styles.container}>
       <Text>Profile</Text>
+      <Button
+        title='Log out!'
+        onPress={async () => {
+          await AsyncStorage.clear();
+          setIsLoggedIn(false);
+        }}
+      />
     </SafeAreaView>
   );
 };
