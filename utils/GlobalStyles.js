@@ -7,21 +7,24 @@ export default StyleSheet.create({
     paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0
   },
   ListItem: {
-    flexDirection: "row",
-    backgroundColor: "#b2beb5",
-    marginBottom: 10,
+    flexDirection: 'row',
+    padding: 15,
+    backgroundColor: '#eee',
+    borderRadius: 6,
+    marginHorizontal: 10,
+    marginBottom: 5,
   },
   Image: {
     flex: 1,
     margin: 10,
-    width: 200,
-    height: 200,
+    borderRadius: 6,
   },
   TextView: {
     flex: 2,
+    padding: 10,
   },
   HeadLine: {
-    padding: 10,
+    paddingBottom: 15,
     fontSize: 20,
     fontWeight: "bold",
   },
@@ -30,5 +33,9 @@ export default StyleSheet.create({
   },
   ImageView: {
     flex: 1,
+  },
+  TextBox: {
+    flex: 2,
+    padding: 10,
   }
 });

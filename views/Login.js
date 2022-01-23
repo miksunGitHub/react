@@ -4,21 +4,28 @@ import {
   View,
   Text,
   Button,
+  KeyboardAvoidingView,
+  Platform,
+  TouchableOpacity,
+  Keyboard,
 } from 'react-native';
 import PropTypes from 'prop-types';
 import {MainContext} from "../context/MainContext";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useUser} from "../hooks/ApiHooks";
 import LoginForm from "../Components/LoginForm";
+import RegisterForm from '../Components/RegisterForm';
+
+
 
 const Login = ({navigation}) => { // props is needed for navigation
-  const {setIsLoggedIn} = useContext(MainContext);
+  const {setIsLoggedIn, setUser} = useContext(MainContext);
   const {getUserByToken}=useUser();
 
   const checkToken = async ()=>{
     const userToken = await AsyncStorage.getItem('userToken');
 
-    //console.log('token value in async storage', userToken);
+    console.log('token value in async storage', userToken);
 
     if(!userToken) {
       return;
@@ -27,6 +34,7 @@ const Login = ({navigation}) => { // props is needed for navigation
     try {
       const userData = await getUserByToken(userToken);
       console.log('checkToken', userData);
+      setUser(userData);
       setIsLoggedIn(true);
     } catch (error){
       console.error(error);
@@ -36,26 +44,22 @@ const Login = ({navigation}) => { // props is needed for navigation
   useEffect(() =>{
     checkToken();
   }, []);
-/*
-  const logIn = async () => {
 
-    const data = {username: 'Horst', password: 'a23Lko2!'};
-    try {
-      const userData = await postLogin(data);
-      const tokenFromApi = userData.token;
-      await AsyncStorage.setItem('userToken', tokenFromApi);
-      setIsLoggedIn(true);
-
-    } catch {
-      console.error(error);
-    }
-  };*/
   return (
-    <View style={styles.container}>
-      <Text>Login</Text>
-      <LoginForm/>
-
-    </View>
+    <TouchableOpacity
+      style={{flex: 1}}
+      activeOpacity={1}
+      onPress={() => Keyboard.dismiss()}
+    >
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : ''}
+        style={styles.container}
+      >
+          <Text>Login</Text>
+          <LoginForm/>
+          <RegisterForm/>
+      </KeyboardAvoidingView>
+    </TouchableOpacity>
   );
 };
 
@@ -66,6 +70,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+
+
 });
 
 Login.propTypes = {
