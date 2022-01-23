@@ -18,7 +18,7 @@ const ListItem = ({navigation, singleMedia}) =>{
         style={GlobalStyles.Image}
       />
       </View>
-      <View>
+      <View style={GlobalStyles.TextBox}>
         <Text style={GlobalStyles.HeadLine}>{singleMedia.title}</Text>
         <Text style={GlobalStyles.Text}>{singleMedia.description}</Text>
       </View>
