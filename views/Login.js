@@ -1,9 +1,7 @@
 import React, {useContext, useEffect} from 'react';
 import {
   StyleSheet,
-  View,
   Text,
-  Button,
   KeyboardAvoidingView,
   Platform,
   TouchableOpacity,
@@ -20,7 +18,7 @@ import RegisterForm from '../Components/RegisterForm';
 
 const Login = ({navigation}) => { // props is needed for navigation
   const {setIsLoggedIn, setUser} = useContext(MainContext);
-  const {getUserByToken}=useUser();
+  const {getUserByToken} = useUser();
 
   const checkToken = async ()=>{
     const userToken = await AsyncStorage.getItem('userToken');
