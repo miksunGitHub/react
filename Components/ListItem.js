@@ -1,5 +1,6 @@
 import React from "react";
 import {Image, Text, TouchableOpacity, View} from "react-native";
+
 import GlobalStyles from "../utils/GlobalStyles";
 import PropTypes from 'prop-types';
 import {uploadsUrl} from "../utils/Variables";
