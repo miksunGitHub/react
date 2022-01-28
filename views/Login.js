@@ -1,12 +1,13 @@
 import React, {useContext, useEffect} from 'react';
 import {
   StyleSheet,
-  Text,
   KeyboardAvoidingView,
   Platform,
   TouchableOpacity,
   Keyboard,
+  View,
 } from 'react-native';
+import {Card, Text} from 'react-native-elements';
 import PropTypes from 'prop-types';
 import {MainContext} from "../context/MainContext";
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -53,9 +54,22 @@ const Login = ({navigation}) => { // props is needed for navigation
         behavior={Platform.OS === 'ios' ? 'padding' : ''}
         style={styles.container}
       >
-          <Text>Login</Text>
-          <LoginForm/>
-          <RegisterForm/>
+
+        <View>
+          <Card>
+            <Card.Title h4>Login</Card.Title>
+            <Card.Divider />
+            <LoginForm/>
+          </Card>
+
+        </View>
+          <View>
+            <Card>
+              <Card.Title h3>Register</Card.Title>
+              <RegisterForm/>
+            </Card>
+          </View>
+
       </KeyboardAvoidingView>
     </TouchableOpacity>
   );

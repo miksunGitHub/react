@@ -1,10 +1,11 @@
 import React, {useContext, useState, useEffect} from 'react';
-import {StyleSheet, SafeAreaView, Text, Button, Image} from 'react-native';
+import {StyleSheet, SafeAreaView} from 'react-native';
 import {MainContext} from "../context/MainContext";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useTag} from "../hooks/ApiHooks";
 import {uploadsUrl} from "../utils/Variables";
-import {Card} from "react-native-elements";
+import {Card, Button, Text} from "react-native-elements";
+
 
 const Profile = () => {
 
@@ -15,7 +16,6 @@ const Profile = () => {
 
   const fetchAvatar = async () => {
     try {
-
 
       const avatarArray = await getFilesByTag('avatar_' + user.user_id);
       const avatar = avatarArray.pop();
@@ -58,17 +58,19 @@ const Profile = () => {
   return (
     <SafeAreaView style={styles.container}>
       <Card style={styles.Card}>
-        <Card.Title H1 style={styles.HeadLine}>User profile: {user.username}</Card.Title>
+        <Card.Title h4 style={styles.HeadLine}>User profile: {user.username}</Card.Title>
 
         <Card.Image
           source = {{uri: avatar}}
           style = {styles.Image}
         />
-
-        <Card.Title style={styles.text}>Your email: {user.email}</Card.Title>
-        <Card.Title style={styles.text}>Full name: {user.full_name}</Card.Title>
       </Card>
+      <Text style={styles.Text}>Your email:</Text>
+      <Text style={styles.Text}>{user.email}</Text>
+      <Text style={styles.Text}>Full name:</Text>
+      <Text style={styles.Text}>{user.full_name}</Text>
       <Button
+        style={styles.Button}
         title='Log out!'
         onPress={async () => {
           await AsyncStorage.clear();
@@ -86,22 +88,30 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: "center",
     paddingTop: 40,
   },
   Image: {
     width: 200,
     height: 200,
+    padding: 50,
   },
   Card: {
     display: "flex",
     alignItems: "center",
+    padding: 20,
   },
   HeadLine: {
-    fontFamily: 'Poppins_400Regular',
+    paddingBottom: 5,
+
   },
   Text: {
-    fontFamily: 'Poppins_400Regular',
+    margin: 0,
+    paddingTop: 20,
+    fontSize: 18,
+  },
+  Button: {
+    margin: 20,
   },
 });
 
