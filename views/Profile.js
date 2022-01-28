@@ -4,21 +4,30 @@ import {MainContext} from "../context/MainContext";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useTag} from "../hooks/ApiHooks";
 import {uploadsUrl} from "../utils/Variables";
+import {Card} from "react-native-elements";
 
 const Profile = () => {
+
   const {setIsLoggedIn, user} = useContext(MainContext);
   const [avatar, setAvatar] = useState('https://placekitten.com/640');
   const {getFilesByTag} = useTag();
 
+
   const fetchAvatar = async () => {
     try {
+
+
       const avatarArray = await getFilesByTag('avatar_' + user.user_id);
       const avatar = avatarArray.pop();
       setAvatar(uploadsUrl + avatar.filename);
+
     } catch(error) {
       console.error(error.message);
     }
   };
+
+
+
   //temp testing
   //this is not needed yet
   /*
@@ -40,30 +49,37 @@ const Profile = () => {
 
   useEffect(() => {
     fetchAvatar();
+
     //createAvatar(95);
   }, []);
 
+
+
   return (
     <SafeAreaView style={styles.container}>
-      <Text>Profile</Text>
-      <Text>{user.username}</Text>
-      <Image
-        source = {{uri: avatar}}
-        style = {{width: '80%', height: '50%'}}
-        resizeMode="contain"
-      />
-      <Text>{user.email}</Text>
-      <Text>{user.full_name}</Text>
+      <Card style={styles.Card}>
+        <Card.Title H1 style={styles.HeadLine}>User profile: {user.username}</Card.Title>
+
+        <Card.Image
+          source = {{uri: avatar}}
+          style = {styles.Image}
+        />
+
+        <Card.Title style={styles.text}>Your email: {user.email}</Card.Title>
+        <Card.Title style={styles.text}>Full name: {user.full_name}</Card.Title>
+      </Card>
       <Button
         title='Log out!'
         onPress={async () => {
           await AsyncStorage.clear();
           setIsLoggedIn(false);
         }}
-      />
+        />
+
     </SafeAreaView>
   );
 };
+
 
 const styles = StyleSheet.create({
   container: {
@@ -72,6 +88,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     paddingTop: 40,
+  },
+  Image: {
+    width: 200,
+    height: 200,
+  },
+  Card: {
+    display: "flex",
+    alignItems: "center",
+  },
+  HeadLine: {
+    fontFamily: 'Poppins_400Regular',
+  },
+  Text: {
+    fontFamily: 'Poppins_400Regular',
   },
 });
 

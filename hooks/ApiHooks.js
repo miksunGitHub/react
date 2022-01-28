@@ -22,7 +22,7 @@ const doFetch = async (url, options) => {
 const useMedia = () => {
   const [mediaArray, setMediaArray] = useState([]);
 
-  const loadMedia = async (start=0, limit=10) =>{
+  const loadMedia = async (start=0, limit=50) =>{
     try{
       const response = await fetch(
         `${baseUrl}media?start=${start}&limit=${limit}`);
@@ -48,7 +48,7 @@ const useMedia = () => {
   };
 
   useEffect(() => {
-    loadMedia(0, 5);
+    loadMedia(0, 50);
 
   }, []);
 

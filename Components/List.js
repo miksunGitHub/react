@@ -14,7 +14,6 @@ const List = ({navigation}) =>{
       renderItem={({item}) =>(
         <ListItem navigation = {navigation} singleMedia={item}/>
       )}
-
     />
   )
 }
@@ -22,5 +21,6 @@ const List = ({navigation}) =>{
 List.propTypes = {
   navigation: PropTypes.object,
 };
+
 
 export default List;
