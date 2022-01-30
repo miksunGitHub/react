@@ -8,7 +8,7 @@ import Single from "../views/Single";
 import Login from "../views/Login";
 import {MainContext} from "../context/MainContext";
 import Icon from 'react-native-vector-icons/Ionicons';
-
+import ModifyUser from '../views/ModifyUser';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -29,9 +29,6 @@ const TabScreen = () =>{
             case 'Profile':
               iconName = 'person-outline';
               break;
-            case 'Map':
-              iconName = 'map';
-              break;
           }
           return <Icon name={iconName} size={size} color={color}/>
         }
@@ -44,9 +41,9 @@ const TabScreen = () =>{
       </Tab.Screen>
       <Tab.Screen
         name="Profile"
-        component={Profile}>
+        component={Profile}
+      >
       </Tab.Screen>
-
     </Tab.Navigator>
   );
 };
@@ -67,6 +64,11 @@ const StackScreen = () => {
           name="Single"
           component={Single}>
         </Stack.Screen>
+          <Stack.Screen
+            name="Modify user"
+            component={ModifyUser}
+          >
+          </Stack.Screen>
         </> : (
         <Stack.Screen name="Login" component={Login}>
 
@@ -80,7 +82,6 @@ const Navigator = () => {
   return (
     <NavigationContainer>
       <StackScreen />
-
     </NavigationContainer>
   );
 };

@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {
   StyleSheet,
   KeyboardAvoidingView,
@@ -7,7 +7,7 @@ import {
   Keyboard,
   View,
 } from 'react-native';
-import {Card, Text} from 'react-native-elements';
+import {ButtonGroup, Card, Text} from 'react-native-elements';
 import PropTypes from 'prop-types';
 import {MainContext} from "../context/MainContext";
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -18,12 +18,12 @@ import RegisterForm from '../Components/RegisterForm';
 
 
 const Login = ({navigation}) => { // props is needed for navigation
+  const [formToggle, setFormToggle] = useState(true);
   const {setIsLoggedIn, setUser} = useContext(MainContext);
   const {getUserByToken} = useUser();
 
   const checkToken = async ()=>{
     const userToken = await AsyncStorage.getItem('userToken');
-
     console.log('token value in async storage', userToken);
 
     if(!userToken) {
@@ -54,22 +54,28 @@ const Login = ({navigation}) => { // props is needed for navigation
         behavior={Platform.OS === 'ios' ? 'padding' : ''}
         style={styles.container}
       >
-
-        <View>
+        <View style = {styles.form}>
           <Card>
-            <Card.Title h3>Login</Card.Title>
-            <Card.Divider />
-            <LoginForm/>
+            <ButtonGroup
+              onPress={() => setFormToggle(!formToggle)}
+              selectedIndex={formToggle ? 0 : 1}
+              buttons={['Login', 'Register']}
+            />
           </Card>
-
-        </View>
-          <View>
+          {formToggle ? (
+            <Card>
+              <Card.Title h3>Login</Card.Title>
+              <Card.Divider />
+              <LoginForm/>
+            </Card>
+          ) : (
             <Card>
               <Card.Title h3>Register</Card.Title>
-              <RegisterForm/>
+              <Card.Divider />
+              <RegisterForm setFormToggle={setFormToggle}/>
             </Card>
-          </View>
-
+            )}
+        </View>
       </KeyboardAvoidingView>
     </TouchableOpacity>
   );
@@ -82,8 +88,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-
-
+  form: {
+    flex: 8,
+  },
 });
 
 Login.propTypes = {

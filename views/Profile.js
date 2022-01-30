@@ -7,7 +7,7 @@ import {uploadsUrl} from "../utils/Variables";
 import {Card, Button, Text} from "react-native-elements";
 
 
-const Profile = () => {
+const Profile = ({navigation}) => {
 
   const {setIsLoggedIn, user} = useContext(MainContext);
   const [avatar, setAvatar] = useState('https://placekitten.com/640');
@@ -49,8 +49,6 @@ const Profile = () => {
 
   useEffect(() => {
     fetchAvatar();
-
-    //createAvatar(95);
   }, []);
 
 
@@ -77,6 +75,12 @@ const Profile = () => {
           setIsLoggedIn(false);
         }}
         />
+      <Button
+        title="Modify user"
+        onPress={() => {
+          navigation.navigate('Modify user');
+        }}
+      />
 
     </SafeAreaView>
   );
