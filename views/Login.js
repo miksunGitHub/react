@@ -57,7 +57,7 @@ const Login = ({navigation}) => { // props is needed for navigation
 
         <View>
           <Card>
-            <Card.Title h4>Login</Card.Title>
+            <Card.Title h3>Login</Card.Title>
             <Card.Divider />
             <LoginForm/>
           </Card>
