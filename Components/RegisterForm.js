@@ -30,7 +30,7 @@ const RegisterForm = () => {
   }
 
   return (
-    <View>
+    <View style={{width: 200}}>
       <Controller
         control={control}
         rules={{
