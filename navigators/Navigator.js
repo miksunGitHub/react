@@ -1,27 +1,28 @@
 import React, {useContext} from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {NavigationContainer} from '@react-navigation/native';
-import Home from "../views/Home";
-import Profile from "../views/Profile";
-import {createNativeStackNavigator} from "@react-navigation/native-stack";
-import Single from "../views/Single";
-import Login from "../views/Login";
-import {MainContext} from "../context/MainContext";
+import Home from '../views/Home';
+import Profile from '../views/Profile';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import Single from '../views/Single';
+import Login from '../views/Login';
+import {MainContext} from '../context/MainContext';
 import Icon from 'react-native-vector-icons/Ionicons';
 import ModifyUser from '../views/ModifyUser';
+import Upload from '../views/Upload';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
-const TabScreen = () =>{
+const TabScreen = () => {
   return (
     <Tab.Navigator
       screenOptions={({route}) => ({
-        tabBarIcon: ({focused, color, size}) =>{
+        tabBarIcon: ({focused, color, size}) => {
           let iconName;
-          switch (route.name){
+          switch (route.name) {
             case 'Home':
-              iconName='home-outline';
+              iconName = 'home-outline';
               break;
             case 'Upload':
               iconName = 'cloudy-outline';
@@ -30,20 +31,13 @@ const TabScreen = () =>{
               iconName = 'person-outline';
               break;
           }
-          return <Icon name={iconName} size={size} color={color}/>
-        }
+          return <Icon name={iconName} size={size} color={color} />;
+        },
       })}
     >
-      <Tab.Screen
-        name="Home"
-        component={Home}
-      >
-      </Tab.Screen>
-      <Tab.Screen
-        name="Profile"
-        component={Profile}
-      >
-      </Tab.Screen>
+      <Tab.Screen name="Home" component={Home}></Tab.Screen>
+      <Tab.Screen name="Upload" component={Upload}></Tab.Screen>
+      <Tab.Screen name="Profile" component={Profile}></Tab.Screen>
     </Tab.Navigator>
   );
 };
@@ -53,30 +47,26 @@ const StackScreen = () => {
 
   return (
     <Stack.Navigator>
-      {isLoggedIn ?
+      {isLoggedIn ? (
         <>
-        <Stack.Screen name="Main"
-                      component={TabScreen}
-                      options={{headerShown: false}}>
-        </Stack.Screen>
+          <Stack.Screen
+            name="Main"
+            component={TabScreen}
+            options={{headerShown: false}}
+          ></Stack.Screen>
 
-        <Stack.Screen
-          name="Single"
-          component={Single}>
-        </Stack.Screen>
+          <Stack.Screen name="Single" component={Single}></Stack.Screen>
           <Stack.Screen
             name="Modify user"
             component={ModifyUser}
-          >
-          </Stack.Screen>
-        </> : (
-        <Stack.Screen name="Login" component={Login}>
-
-        </Stack.Screen>)}
+          ></Stack.Screen>
+        </>
+      ) : (
+        <Stack.Screen name="Login" component={Login}></Stack.Screen>
+      )}
     </Stack.Navigator>
-
-  )
-}
+  );
+};
 
 const Navigator = () => {
   return (

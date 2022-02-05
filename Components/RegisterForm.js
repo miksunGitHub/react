@@ -1,16 +1,17 @@
-import React, {useContext} from "react";
-import { View, Alert } from "react-native";
-import { useForm, Controller } from "react-hook-form";
+import React, {useContext} from 'react';
+import {View, Alert} from 'react-native';
+import {useForm, Controller} from 'react-hook-form';
 import {Input, Button, Text} from 'react-native-elements';
-import {useUser} from "../hooks/ApiHooks";
+import {useUser} from '../hooks/ApiHooks';
 
+// eslint-disable-next-line react/prop-types
 const RegisterForm = ({setFormToggle}) => {
   const {postUser, checkUsername} = useUser();
 
   const {
     control,
     handleSubmit,
-    formState: { errors },
+    formState: {errors},
     getValues,
   } = useForm({
     defaultValues: {
@@ -22,21 +23,20 @@ const RegisterForm = ({setFormToggle}) => {
     mode: 'onBlur',
   });
 
-  const onSubmit = async (data) =>  {
+  const onSubmit = async (data) => {
     console.log(data);
-    try{
+    try {
       delete data.confirmPassword;
       const userData = await postUser(data);
       console.log('register on submit', userData);
-      if(userData) {
+      if (userData) {
         Alert.alert('Success', 'User created successfully.');
         setFormToggle(true);
       }
-
-    }catch (error){
+    } catch (error) {
       console.error(error);
     }
-  }
+  };
 
   return (
     <View style={{width: 200}}>
@@ -46,7 +46,7 @@ const RegisterForm = ({setFormToggle}) => {
           required: {value: true, message: 'User name required'},
           minLength: {
             value: 3,
-            message: 'User name needs to be at least 3 characters long.'
+            message: 'User name needs to be at least 3 characters long.',
           },
           validate: async (value) => {
             try {
@@ -59,9 +59,9 @@ const RegisterForm = ({setFormToggle}) => {
             } catch (error) {
               throw new Error(error.message);
             }
-          }
+          },
         }}
-        render={({ field: { onChange, onBlur, value } }) => (
+        render={({field: {onChange, onBlur, value}}) => (
           <Input
             style={{borderWidth: 1, padding: 10}}
             onBlur={onBlur}
@@ -87,7 +87,7 @@ const RegisterForm = ({setFormToggle}) => {
             message: 'Min 8, uppercase number',
           },*/
         }}
-        render={({ field: { onChange, onBlur, value } }) => (
+        render={({field: {onChange, onBlur, value}}) => (
           <Input
             style={{borderWidth: 1, padding: 10}}
             onBlur={onBlur}
@@ -142,7 +142,7 @@ const RegisterForm = ({setFormToggle}) => {
             message: 'Must be a valid email',
           },
         }}
-        render={({ field: { onChange, onBlur, value } }) => (
+        render={({field: {onChange, onBlur, value}}) => (
           <Input
             style={{borderWidth: 1, padding: 10}}
             onBlur={onBlur}
@@ -163,7 +163,7 @@ const RegisterForm = ({setFormToggle}) => {
             message: 'Full name must be at least 3 characters long',
           },
         }}
-        render={({ field: { onChange, onBlur, value } }) => (
+        render={({field: {onChange, onBlur, value}}) => (
           <Input
             style={{borderWidth: 1, padding: 10}}
             onBlur={onBlur}
@@ -180,6 +180,6 @@ const RegisterForm = ({setFormToggle}) => {
       <Button title="Submit" onPress={handleSubmit(onSubmit)} />
     </View>
   );
-}
+};
 
 export default RegisterForm;

@@ -1,6 +1,6 @@
-import React, {useContext} from "react";
-import { Text, View, TextInput, Button } from "react-native";
-import { useForm, Controller } from "react-hook-form";
+import React, {useContext} from 'react';
+import {Text, View, TextInput, Button} from 'react-native';
+import {useForm, Controller} from 'react-hook-form';
 import {MainContext} from '../context/MainContext';
 import {useLogin} from '../hooks/ApiHooks';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -13,22 +13,21 @@ const LoginForm = () => {
   const {
     control,
     handleSubmit,
-    formState: { errors }
+    formState: {errors},
   } = useForm({
     defaultValues: {
       username: '',
-      password: ''
-    }
+      password: '',
+    },
   });
 
-  const onSubmit = async (data) =>  {
+  const onSubmit = async (data) => {
     console.log(data);
     try {
       const userData = await postLogin(data);
       await AsyncStorage.setItem('userToken', userData.token);
-      setUser(userData.user)
+      setUser(userData.user);
       setIsLoggedIn(true);
-
     } catch {
       console.error(error);
     }
@@ -41,7 +40,7 @@ const LoginForm = () => {
         rules={{
           required: true,
         }}
-        render={({ field: { onChange, onBlur, value } }) => (
+        render={({field: {onChange, onBlur, value}}) => (
           <TextInput
             style={{borderWidth: 1, padding: 10}}
             onBlur={onBlur}
@@ -60,7 +59,7 @@ const LoginForm = () => {
         rules={{
           required: true,
         }}
-        render={({ field: { onChange, onBlur, value } }) => (
+        render={({field: {onChange, onBlur, value}}) => (
           <TextInput
             style={{borderWidth: 1, padding: 10}}
             onBlur={onBlur}

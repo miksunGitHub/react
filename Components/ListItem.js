@@ -1,31 +1,35 @@
-import React from "react";
-import {Image, Text, ListItem as RNEListItem, Button} from "react-native-elements";
-import{TouchableOpacity, View, StyleSheet} from 'react-native';
+import React from 'react';
+import {
+  Image,
+  Text,
+  ListItem as RNEListItem,
+  Button,
+} from 'react-native-elements';
+import {TouchableOpacity, View, StyleSheet} from 'react-native';
 import PropTypes from 'prop-types';
-import {uploadsUrl} from "../utils/Variables";
-import {useFonts, Poppins_400Regular} from "@expo-google-fonts/poppins";
+import {uploadsUrl} from '../utils/Variables';
+import {useFonts, Poppins_400Regular} from '@expo-google-fonts/poppins';
 import AppLoading from 'expo-app-loading';
 
-const ListItem = ({navigation, singleMedia}) =>{
-
-  let [fontsLoaded]=useFonts({
+const ListItem = ({navigation, singleMedia}) => {
+  const [fontsLoaded] = useFonts({
     Poppins_400Regular,
   });
 
-  if (!fontsLoaded){
+  if (!fontsLoaded) {
     return <AppLoading />;
   }
 
   return (
     <TouchableOpacity
       style={styles.ListItem}
-      onPress = {() =>{
+      onPress={() => {
         navigation.navigate('Single', {file: singleMedia});
       }}
     >
       <View style={styles.ImageView}>
         <Image
-          source={{uri: uploadsUrl+ singleMedia.thumbnails?.w160}}
+          source={{uri: uploadsUrl + singleMedia.thumbnails?.w160}}
           style={styles.Image}
         />
       </View>
@@ -35,14 +39,13 @@ const ListItem = ({navigation, singleMedia}) =>{
       </View>
       <Button
         title={'View'}
-        onPress= {()=> {
-          navigation.navigate('Single', {file: singleMedia})
+        onPress={() => {
+          navigation.navigate('Single', {file: singleMedia});
         }}
-        />
-
+      />
     </TouchableOpacity>
   );
-}
+};
 
 ListItem.propTypes = {
   singleMedia: PropTypes.object.isRequired,
@@ -50,19 +53,19 @@ ListItem.propTypes = {
 };
 
 const styles = StyleSheet.create({
-  Image:{
+  Image: {
     borderRadius: 6,
     width: '80%',
     height: undefined,
     aspectRatio: 1,
   },
-  HeadLine:{
+  HeadLine: {
     fontSize: 19,
     marginBottom: 2,
-    fontFamily: "Poppins_400Regular",
+    fontFamily: 'Poppins_400Regular',
   },
-  Text:{
-    fontFamily: "Poppins_400Regular",
+  Text: {
+    fontFamily: 'Poppins_400Regular',
   },
   TextBox: {
     flex: 2,
@@ -72,13 +75,13 @@ const styles = StyleSheet.create({
   },
   ListItem: {
     flexDirection: 'row',
-    alignItems: "center",
+    alignItems: 'center',
     padding: 20,
     paddingLeft: 25,
     backgroundColor: '#FFFFFF',
     borderTopWidth: 1,
     borderColor: '#d8dcdf',
   },
-})
+});
 
 export default ListItem;

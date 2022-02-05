@@ -2,7 +2,7 @@ module.exports = {
   'parser': '@babel/eslint-parser',
   'env': {
     'browser': true,
-    'es2020': true,
+    'es2021': true,
     'react-native/react-native': true,
   },
   'extends': [

@@ -1,35 +1,28 @@
 import React, {useContext, useState, useEffect} from 'react';
 import {StyleSheet, SafeAreaView} from 'react-native';
-import {MainContext} from "../context/MainContext";
+import {MainContext} from '../context/MainContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {useTag} from "../hooks/ApiHooks";
-import {uploadsUrl} from "../utils/Variables";
-import {Card, Button, Text} from "react-native-elements";
-
+import {useTag} from '../hooks/ApiHooks';
+import {uploadsUrl} from '../utils/Variables';
+import {Card, Button, Text} from 'react-native-elements';
 
 const Profile = ({navigation}) => {
-
   const {setIsLoggedIn, user} = useContext(MainContext);
   const [avatar, setAvatar] = useState('https://placekitten.com/640');
   const {getFilesByTag} = useTag();
 
-
   const fetchAvatar = async () => {
     try {
-
       const avatarArray = await getFilesByTag('avatar_' + user.user_id);
       const avatar = avatarArray.pop();
       setAvatar(uploadsUrl + avatar.filename);
-
-    } catch(error) {
+    } catch (error) {
       console.error(error.message);
     }
   };
 
-
-
-  //temp testing
-  //this is not needed yet
+  // temp testing
+  // this is not needed yet
   /*
   const createAvatar = async (mediaId) => {
 
@@ -51,17 +44,14 @@ const Profile = ({navigation}) => {
     fetchAvatar();
   }, []);
 
-
-
   return (
     <SafeAreaView style={styles.container}>
       <Card style={styles.Card}>
-        <Card.Title h4 style={styles.HeadLine}>User profile: {user.username}</Card.Title>
+        <Card.Title h4 style={styles.HeadLine}>
+          User profile: {user.username}
+        </Card.Title>
 
-        <Card.Image
-          source = {{uri: avatar}}
-          style = {styles.Image}
-        />
+        <Card.Image source={{uri: avatar}} style={styles.Image} />
       </Card>
       <Text style={styles.Text}>Your email:</Text>
       <Text style={styles.Text}>{user.email}</Text>
@@ -69,30 +59,28 @@ const Profile = ({navigation}) => {
       <Text style={styles.Text}>{user.full_name}</Text>
       <Button
         style={styles.Button}
-        title='Log out!'
+        title="Log out!"
         onPress={async () => {
           await AsyncStorage.clear();
           setIsLoggedIn(false);
         }}
-        />
+      />
       <Button
         title="Modify user"
         onPress={() => {
           navigation.navigate('Modify user');
         }}
       />
-
     </SafeAreaView>
   );
 };
-
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: "center",
+    justifyContent: 'center',
     paddingTop: 40,
   },
   Image: {
@@ -101,13 +89,12 @@ const styles = StyleSheet.create({
     padding: 50,
   },
   Card: {
-    display: "flex",
-    alignItems: "center",
+    display: 'flex',
+    alignItems: 'center',
     padding: 20,
   },
   HeadLine: {
     paddingBottom: 5,
-
   },
   Text: {
     margin: 0,

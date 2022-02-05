@@ -1,8 +1,7 @@
-const uploadsUrl='https://media.mw.metropolia.fi/wbma/uploads/';
+const uploadsUrl = 'https://media.mw.metropolia.fi/wbma/uploads/';
 
-const baseUrl='https://media.mw.metropolia.fi/wbma/';
+const baseUrl = 'https://media.mw.metropolia.fi/wbma/';
 
-export{
-  uploadsUrl,
-  baseUrl,
-}
+const appId = 'pawsitive2';
+
+export {uploadsUrl, baseUrl, appId};

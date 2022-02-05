@@ -5,16 +5,16 @@ import {
   Platform,
   TouchableOpacity,
   Keyboard,
-  View,
+  View, ScrollView,
 } from 'react-native';
-import {ButtonGroup, Card, Text} from 'react-native-elements';
+import {ButtonGroup, Card} from 'react-native-elements';
 import PropTypes from 'prop-types';
 import {MainContext} from "../context/MainContext";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useUser} from "../hooks/ApiHooks";
 import LoginForm from "../Components/LoginForm";
 import RegisterForm from '../Components/RegisterForm';
-
+import Logo from '../assets/logo.svg';
 
 
 const Login = ({navigation}) => { // props is needed for navigation
@@ -54,6 +54,10 @@ const Login = ({navigation}) => { // props is needed for navigation
         behavior={Platform.OS === 'ios' ? 'padding' : ''}
         style={styles.container}
       >
+        <ScrollView contentContainerStyle={styles.container}>
+          <Logo
+            style={styles.logo}/>
+
         <View style = {styles.form}>
           <Card>
             <ButtonGroup
@@ -76,6 +80,7 @@ const Login = ({navigation}) => { // props is needed for navigation
             </Card>
             )}
         </View>
+        </ScrollView>
       </KeyboardAvoidingView>
     </TouchableOpacity>
   );
@@ -88,8 +93,24 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  appTitle: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   form: {
     flex: 8,
+  },
+  logo: {
+    marginTop: 20,
+    width: 40,
+    height: 40,
+
+  },
+  logoContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignSelf: 'center'
   },
 });
 
