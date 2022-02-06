@@ -5,28 +5,29 @@ import {
   Platform,
   TouchableOpacity,
   Keyboard,
-  View, ScrollView,
+  View,
+  ScrollView,
 } from 'react-native';
 import {ButtonGroup, Card} from 'react-native-elements';
 import PropTypes from 'prop-types';
-import {MainContext} from "../context/MainContext";
+import {MainContext} from '../context/MainContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {useUser} from "../hooks/ApiHooks";
-import LoginForm from "../Components/LoginForm";
+import {useUser} from '../hooks/ApiHooks';
+import LoginForm from '../Components/LoginForm';
 import RegisterForm from '../Components/RegisterForm';
 import Logo from '../assets/logo.svg';
 
-
-const Login = ({navigation}) => { // props is needed for navigation
+const Login = ({navigation}) => {
+  // props is needed for navigation
   const [formToggle, setFormToggle] = useState(true);
   const {setIsLoggedIn, setUser} = useContext(MainContext);
   const {getUserByToken} = useUser();
 
-  const checkToken = async ()=>{
+  const checkToken = async () => {
     const userToken = await AsyncStorage.getItem('userToken');
     console.log('token value in async storage', userToken);
 
-    if(!userToken) {
+    if (!userToken) {
       return;
     }
 
@@ -35,12 +36,12 @@ const Login = ({navigation}) => { // props is needed for navigation
       console.log('checkToken', userData);
       setUser(userData);
       setIsLoggedIn(true);
-    } catch (error){
+    } catch (error) {
       console.error(error);
     }
   };
 
-  useEffect(() =>{
+  useEffect(() => {
     checkToken();
   }, []);
 
@@ -55,31 +56,30 @@ const Login = ({navigation}) => { // props is needed for navigation
         style={styles.container}
       >
         <ScrollView contentContainerStyle={styles.container}>
-          <Logo
-            style={styles.logo}/>
+          <Logo style={styles.logo} />
 
-        <View style = {styles.form}>
-          <Card>
-            <ButtonGroup
-              onPress={() => setFormToggle(!formToggle)}
-              selectedIndex={formToggle ? 0 : 1}
-              buttons={['Login', 'Register']}
-            />
-          </Card>
-          {formToggle ? (
+          <View style={styles.form}>
             <Card>
-              <Card.Title h3>Login</Card.Title>
-              <Card.Divider />
-              <LoginForm/>
+              <ButtonGroup
+                onPress={() => setFormToggle(!formToggle)}
+                selectedIndex={formToggle ? 0 : 1}
+                buttons={['Login', 'Register']}
+              />
             </Card>
-          ) : (
-            <Card>
-              <Card.Title h3>Register</Card.Title>
-              <Card.Divider />
-              <RegisterForm setFormToggle={setFormToggle}/>
-            </Card>
+            {formToggle ? (
+              <Card>
+                <Card.Title h3>Login</Card.Title>
+                <Card.Divider />
+                <LoginForm />
+              </Card>
+            ) : (
+              <Card>
+                <Card.Title h3>Register</Card.Title>
+                <Card.Divider />
+                <RegisterForm setFormToggle={setFormToggle} />
+              </Card>
             )}
-        </View>
+          </View>
         </ScrollView>
       </KeyboardAvoidingView>
     </TouchableOpacity>
@@ -105,12 +105,11 @@ const styles = StyleSheet.create({
     marginTop: 20,
     width: 40,
     height: 40,
-
   },
   logoContainer: {
     flex: 1,
     justifyContent: 'center',
-    alignSelf: 'center'
+    alignSelf: 'center',
   },
 });
 
