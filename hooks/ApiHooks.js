@@ -99,6 +99,14 @@ const useUser = () => {
     return await doFetch(baseUrl + 'users/user', options);
   };
 
+  const getUserById = async (userId, token) => {
+    const options = {
+      method: 'GET',
+      headers: {'x-access-token': token},
+    };
+    return await doFetch(`${baseUrl}users/${userId}`, options);
+  };
+
   const postUser = async (data) => {
     const options = {
       method: 'POST',
@@ -127,7 +135,7 @@ const useUser = () => {
     return result.available;
   };
 
-  return {getUserByToken, postUser, putUser, checkUsername};
+  return {getUserByToken, postUser, putUser, checkUsername, getUserById};
 };
 
 const useTag = () => {
@@ -150,4 +158,31 @@ const useTag = () => {
   return {postTag, getFilesByTag};
 };
 
-export {useMedia, useLogin, useUser, useTag};
+const useFavourite = () => {
+  const postFavourite = async (fileId, token) => {
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-access-token': token,
+      },
+      body: JSON.stringify({file_id: fileId}),
+    };
+    return await doFetch(`${baseUrl}favourites`, options);
+  };
+  const getFavouritesByFileId = async (fileId) => {
+    return await doFetch(`${baseUrl}favourites/file/${fileId}`);
+  };
+  const deleteFavourite = async (fileId, token) => {
+    const options = {
+      method: 'DELETE',
+      headers: {
+        'x-access-token': token,
+      },
+    };
+    return await doFetch(`${baseUrl}favourites/file/${fileId}`, options);
+  };
+  return {postFavourite, getFavouritesByFileId, deleteFavourite};
+};
+
+export {useMedia, useLogin, useUser, useTag, useFavourite};
