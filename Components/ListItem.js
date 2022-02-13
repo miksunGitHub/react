@@ -1,55 +1,88 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {
-  Image,
-  Text,
   ListItem as RNEListItem,
-  Button,
+  Avatar,
+  ButtonGroup,
 } from 'react-native-elements';
-import {TouchableOpacity, View, StyleSheet} from 'react-native';
+import {StyleSheet, Alert} from 'react-native';
 import PropTypes from 'prop-types';
 import {uploadsUrl} from '../utils/Variables';
 import {useFonts, Poppins_400Regular} from '@expo-google-fonts/poppins';
 import AppLoading from 'expo-app-loading';
+import {MainContext} from '../context/MainContext';
+import {useMedia} from '../hooks/ApiHooks';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const ListItem = ({navigation, singleMedia}) => {
+const ListItem = ({navigation, singleMedia, myFilesOnly}) => {
+  /*
   const [fontsLoaded] = useFonts({
     Poppins_400Regular,
   });
 
   if (!fontsLoaded) {
     return <AppLoading />;
-  }
+  }*/
+  const {deleteMedia} = useMedia();
+  const {update, setUpdate} = useContext(MainContext);
+  const doDelete = () => {
+    Alert.alert('Delete', 'this file permanently', [
+      {text: 'Cancel'},
+      {
+        text: 'OK',
+        onPress: async () => {
+          try {
+            const token = await AsyncStorage.getItem('userToken');
+            const response = await deleteMedia(singleMedia.file_id, token);
+            response && setUpdate(update + 1);
+          } catch (error) {
+            console.error(error);
+          }
+        },
+      },
+    ]);
+  };
 
   return (
-    <TouchableOpacity
-      style={styles.ListItem}
+    <RNEListItem
+      bottomDivider
       onPress={() => {
         navigation.navigate('Single', {file: singleMedia});
       }}
     >
-      <View style={styles.ImageView}>
-        <Image
-          source={{uri: uploadsUrl + singleMedia.thumbnails?.w160}}
-          style={styles.Image}
-        />
-      </View>
-      <View style={styles.TextBox}>
-        <Text style={styles.HeadLine}>{singleMedia.title}</Text>
-        <Text style={styles.Text}>{singleMedia.description}</Text>
-      </View>
-      <Button
-        title={'View'}
-        onPress={() => {
-          navigation.navigate('Single', {file: singleMedia});
-        }}
+      <Avatar
+        size="large"
+        source={{uri: uploadsUrl + singleMedia.thumbnails?.w160}}
       />
-    </TouchableOpacity>
+      <RNEListItem.Content>
+        <RNEListItem.Title numberOfLines={1} h4>
+          {singleMedia.title}
+        </RNEListItem.Title>
+        <RNEListItem.Subtitle style={styles.Text}>
+          {singleMedia.description}
+        </RNEListItem.Subtitle>
+        {myFilesOnly && (
+          <ButtonGroup
+            onPress={(index) => {
+              if (index === 0) {
+                navigation.navigate('Modify', {file: singleMedia});
+              } else {
+                doDelete();
+              }
+            }}
+            buttons={['Modify', 'Delete']}
+            rounded
+          />
+        )}
+      </RNEListItem.Content>
+      <RNEListItem.Chevron />
+    </RNEListItem>
   );
 };
 
 ListItem.propTypes = {
   singleMedia: PropTypes.object.isRequired,
   navigation: PropTypes.object.isRequired,
+  myFilesOnly: PropTypes.bool,
 };
 
 const styles = StyleSheet.create({
@@ -62,11 +95,8 @@ const styles = StyleSheet.create({
   HeadLine: {
     fontSize: 19,
     marginBottom: 2,
-    fontFamily: 'Poppins_400Regular',
   },
-  Text: {
-    fontFamily: 'Poppins_400Regular',
-  },
+  Text: {},
   TextBox: {
     flex: 2,
   },
